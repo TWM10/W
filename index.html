@@ -1,0 +1,207 @@
+<!doctype html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <title>Blank template</title>
+
+        <!-- Load external CSS styles -->
+        <link rel="stylesheet" href="styles.css">
+
+    </head>
+
+    <body>
+
+        <h1>My awesome space</h1>
+        
+        <!-- Load external JavaScript -->
+        <script src="scripts.js"></script>
+        
+    </body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Options</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://drive.google.com/uc?id=1pi5qjw9EPJTS1kDyoMFWOSbR-E0ON2IB');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #000;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            margin-top: 100px;
+        }
+        .option {
+            display: inline-block;
+            margin: 20px;
+            padding: 20px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .option:hover {
+            background-color: #2980b9;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 0;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+            text-align: center;
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 100%;
+            max-height: 100vh;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #2980b9;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .time-display {
+            font-size: 72px;
+            color: #fff;
+            margin-top: 20px;
+        }
+        .weather-info {
+            font-size: 24px;
+            color: #fff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="optionsContainer">
+        <a class="option" href="#" onclick="openModal('wifiAccess')">Wi-Fi Access</a>
+        <a class="option" href="#" onclick="openModal('time')">Time</a>
+        <a class="option" href="#" onclick="getWeather()">Weather</a>
+        <a class="option" href="#" onclick="openModal('option4')">Option 4</a>
+        <a class="option" href="#" onclick="openModal('option5')">Option 5</a>
+    </div>
+    
+    <div id="wifiAccessModal" class="modal">
+        <button class="back-button" onclick="closeModal('wifiAccess')">Back</button>
+        <span class="modal-content">
+            <img src="https://drive.google.com/uc?id=1PJpFTYvJIB9lP07cEnmCU_1bL38hmS2t" alt="Wi-Fi Access Image">
+        </span>
+    </div>
+    
+    <div id="timeModal" class="modal">
+        <button class="back-button" onclick="closeModal('time')">Back</button>
+        <div class="time-display" id="currentTime"></div>
+    </div>
+    
+    <div id="weatherModal" class="modal">
+        <button class="back-button" onclick="closeModal('weather')">Back</button>
+        <div class="weather-info" id="weatherInfo"></div>
+    </div>
+    
+    <div id="option4Modal" class="modal">
+        <button class="back-button" onclick="closeModal('option4')">Back</button>
+        <div class="modal-content">
+            <p>Content for Option 4</p>
+            <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F803982618248366%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+        </div>
+    </div>
+    
+    <div id="option5Modal" class="modal">
+        <button class="back-button" onclick="closeModal('option5')">Back</button>
+        <div class="modal-content">
+            <p>Content for Option 5</p>
+        </div>
+    </div>
+
+    <script>
+        var timeInterval;
+
+        function openModal(modalId) {
+            var modal = document.getElementById(modalId + 'Modal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            document.getElementById('optionsContainer').style.display = 'none';
+            if (modalId === 'time') {
+                updateTime();
+                timeInterval = setInterval(updateTime, 1000);
+            }
+        }
+        
+        function closeModal(modalId) {
+            var modal = document.getElementById(modalId + 'Modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('optionsContainer').style.display = 'block';
+            if (modalId === 'time') {
+                clearInterval(timeInterval);
+            }
+        }
+
+        function updateTime() {
+            var currentTimeDisplay = document.getElementById('currentTime');
+            var currentTime = new Date();
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            var minutesStr = minutes < 10 ? '0' + minutes : minutes;
+            currentTimeDisplay.innerHTML = hours + ':' + minutesStr + ' ' + ampm;
+        }
+
+        function getWeather() {
+            var weatherModal = document.getElementById('weatherModal');
+            var weatherInfo = document.getElementById('weatherInfo');
+
+            var apiKey = 'YOUR_API_KEY';
+            var city = 'Mill Valley';
+
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
+                .then(response => response.json())
+                .then(data => {
+                    var temperature = data.main.temp.toFixed(2);
+                    var weatherDescription = data.weather[0].description;
+
+                    weatherInfo.innerHTML = `Temperature: ${temperature}°F<br>Weather: ${weatherDescription}`;
+                    weatherModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                    document.getElementById('optionsContainer').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                });
+        }
+    </script>
+</body>
+</html>
